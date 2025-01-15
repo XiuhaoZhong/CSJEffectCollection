@@ -1,15 +1,11 @@
 // OpenGLPipeLine.cpp : 定义应用程序的入口点。
 //
 
-#include <Windows.h>
-
 #include <iostream>
 #include <string>
 
 #include "common/common.hpp"
 #include "Graphics/GraphicsBase.h"
-
-//#include "BookDemo.h"
 
 using namespace std;
 
@@ -26,10 +22,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
 void framebuffer_size_change_callback(GLFWwindow *window, int width, int height);
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-					  _In_opt_ HINSTANCE hPrevInstance,
-					  _In_ LPWSTR    lpCmdLine,
-					  _In_ int       nCmdShow) {
+int APIENTRY wWinMain(int argc, char** argv) {
 
 	if (!glfwInit()) {
 		exit(EXIT_FAILURE);
