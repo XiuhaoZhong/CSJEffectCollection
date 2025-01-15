@@ -2,19 +2,24 @@
 
 #include <fstream>
 #include <iostream>
+#include <filesystem>
 
+#if __WIN32__
 #include <Windows.h>
 #include <shlwapi.h>
+#elif __APPLE__
+#include <unistd.h>
+#endif
 
-#include <GL\glew.h>
-#include <GLFW\glfw3.h>
-#include <SOIL2\soil2.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+#include <SOIL2/soil2.h>
 #include <string>
 
 #include <cmath>
-#include <glm\glm.hpp>
-#include <glm\gtc\type_ptr.hpp> // glm::value_ptr
-#include <glm\gtc\matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp> // glm::value_ptr
+#include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
 using namespace std;
 
 using namespace std;
@@ -27,6 +32,7 @@ Utils::~Utils() {
 
 }
 
+#if __WIN32__
 static char* wchar2char(LPWSTR tcStr) {
     if (!tcStr) {
         return NULL;
@@ -55,7 +61,7 @@ static TCHAR* char2wchar(const char* cStr) {
     return ret;
 }
 
-std::string Utils::getCurRunPath() {
+std::string getCurrentRunPath() {
     TCHAR szPath[255];
     ::GetModuleFileName(NULL, szPath, MAX_PATH);
     char *path = wchar2char(szPath);
@@ -70,14 +76,31 @@ std::string Utils::getCurRunPath() {
     TCHAR szCurDir[MAX_PATH];
     DWORD dirLen = ::GetFullPathName(TEXT("C:"), MAX_PATH, szCurDir, NULL);
 
-    std::string strPath(path);
+    std::string resPath(path);
+    return resPath;
+}
+#elif __APPLE__
+std::string getCurrentRunPath() {
+    const int MAXPATH = 250;
+    char buffer[MAXPATH];
+    getcwd(buffer, MAXPATH);
+    return std::string(buffer);
+}
+#endif
 
-    delete path;
+std::string Utils::getCurRunPath() {
+    std::string strPath;
+#if __WIN32__
+    strPath = getCurrentRunPath();
+#elif __APPLE__
+    strPath = getCurrentRunPath();
+#endif
     return strPath;
 }
 
 // _CRT_SECURE_NO_WARNINGS
 std::string Utils::getResourcePath(std::string relativePath) {
+#if __WIN32__
     TCHAR curPath[255];
     DWORD pathLen = ::GetCurrentDirectory(255, curPath);
     if (pathLen > 0) {
@@ -95,6 +118,10 @@ std::string Utils::getResourcePath(std::string relativePath) {
     std::string resPath(path);
 
     delete path;
+#endif
+    std::string curPath = std::filesystem::current_path();
+
+    std::string resPath = curPath.append("/").append(relativePath);
     return resPath;
 }
 
@@ -103,11 +130,14 @@ void Utils::outputLog(std::string logStr) {
         return ;
     }
 
+#if __WIN32__
     WCHAR *logString = char2wchar(logStr.c_str());
     OutputDebugString(logString);
     OutputDebugString(L"\n");
 
+
     free(logString);
+#endif
 }
 
 string Utils::readFile(const char* filePath) {

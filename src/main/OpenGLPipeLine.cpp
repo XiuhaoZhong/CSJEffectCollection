@@ -22,15 +22,25 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
 void framebuffer_size_change_callback(GLFWwindow *window, int width, int height);
 
-int APIENTRY wWinMain(int argc, char** argv) {
+int main(int argc, char** argv) {
 
 	if (!glfwInit()) {
 		exit(EXIT_FAILURE);
 	}
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+#if __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
+
 	GLFWwindow *window = glfwCreateWindow(800, 800, "OpenGL", NULL, NULL);
+    if (!window) {
+        std::cout << "Create window failed!" << std::endl;
+        glfwTerminate();
+        return EXIT_FAILURE;
+    }
 	glfwMakeContextCurrent(window);
 
 	// Set the required callback functions;
