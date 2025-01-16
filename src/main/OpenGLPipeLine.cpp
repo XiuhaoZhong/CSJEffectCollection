@@ -1,5 +1,8 @@
 // OpenGLPipeLine.cpp : 定义应用程序的入口点。
 //
+#if _WIN32
+#include <Windows.h>
+#endif
 
 #include <iostream>
 #include <string>
@@ -22,7 +25,25 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
 void framebuffer_size_change_callback(GLFWwindow *window, int width, int height);
 
+int internalMain();
+
+#if _WIN32
+int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow) {
+    int argc = 0;
+    LPWSTR *argList;
+
+    argList = CommandLineToArgvW(GetCommandLine(), &argc);
+
+    return internalMain();
+}
+#elif __APPLE__
 int main(int argc, char** argv) {
+    // TODO: parse argc and argv if necessary.
+    return internalMain();
+}
+#endif
+
+int internalMain() {
 
 	if (!glfwInit()) {
 		exit(EXIT_FAILURE);

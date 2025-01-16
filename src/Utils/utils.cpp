@@ -4,7 +4,7 @@
 #include <iostream>
 #include <filesystem>
 
-#if __WIN32__
+#if _WIN32
 #include <Windows.h>
 #include <shlwapi.h>
 #elif __APPLE__
@@ -32,7 +32,7 @@ Utils::~Utils() {
 
 }
 
-#if __WIN32__
+#if _WIN32
 static char* wchar2char(LPWSTR tcStr) {
     if (!tcStr) {
         return NULL;
@@ -90,7 +90,7 @@ std::string getCurrentRunPath() {
 
 std::string Utils::getCurRunPath() {
     std::string strPath;
-#if __WIN32__
+#if _WIN32
     strPath = getCurrentRunPath();
 #elif __APPLE__
     strPath = getCurrentRunPath();
@@ -100,7 +100,8 @@ std::string Utils::getCurRunPath() {
 
 // _CRT_SECURE_NO_WARNINGS
 std::string Utils::getResourcePath(std::string relativePath) {
-#if __WIN32__
+    std::string resPath;
+#if _WIN32
     TCHAR curPath[255];
     DWORD pathLen = ::GetCurrentDirectory(255, curPath);
     if (pathLen > 0) {
@@ -115,13 +116,13 @@ std::string Utils::getResourcePath(std::string relativePath) {
     char *path = wchar2char(curPath);
     path = wchar2char(curPath);
 
-    std::string resPath(path);
+    resPath = std::string(path);
 
     delete path;
-#endif
+#elif __APPLE__
     std::string curPath = std::filesystem::current_path();
-
     std::string resPath = curPath.append("/").append(relativePath);
+#endif
     return resPath;
 }
 
