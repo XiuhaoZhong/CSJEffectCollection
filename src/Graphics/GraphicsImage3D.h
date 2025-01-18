@@ -2,7 +2,7 @@
 
 #include "GraphicsBase.h"
 
-class GraphicImage3D : public GraphicBase {
+class GraphicImage3D : public GraphicsBase {
 public:
 	GraphicImage3D();
 	~GraphicImage3D();

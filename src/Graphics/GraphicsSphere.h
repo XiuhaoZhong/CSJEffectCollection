@@ -5,7 +5,7 @@
 #include "GraphicsBase.h"
 #include "GraphicShapeBase.h"
 
-class GraphicsSphere : public GraphicBase {
+class GraphicsSphere : public GraphicsBase {
 public:
     GraphicsSphere();
     ~GraphicsSphere();

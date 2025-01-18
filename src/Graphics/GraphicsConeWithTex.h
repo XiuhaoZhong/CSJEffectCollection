@@ -7,7 +7,7 @@
 //#include "glm\gtc\matrix_transform.hpp"
 
 // 在三角锥体表面绘制图片纹理;
-class GraphicsConeWithTex : public GraphicBase {
+class GraphicsConeWithTex : public GraphicsBase {
 public:
     GraphicsConeWithTex();
     ~GraphicsConeWithTex();

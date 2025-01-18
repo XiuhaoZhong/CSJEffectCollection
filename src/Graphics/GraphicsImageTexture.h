@@ -2,7 +2,7 @@
 
 #include "GraphicsBase.h"
 
-class GraphicImageTexture : public GraphicBase {
+class GraphicImageTexture : public GraphicsBase {
 public:
 	GraphicImageTexture();
 	~GraphicImageTexture();

@@ -2,7 +2,7 @@
 
 #include "GraphicsBase.h"
 
-class GraphicCamera : public GraphicBase {
+class GraphicCamera : public GraphicsBase {
 public:
 	GraphicCamera();
 	~GraphicCamera();

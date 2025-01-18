@@ -2,7 +2,7 @@
 
 #include "GraphicsBase.h"
 
-class GraphicAnimation : public GraphicBase {
+class GraphicAnimation : public GraphicsBase {
 public:
 	GraphicAnimation();
 	~GraphicAnimation();

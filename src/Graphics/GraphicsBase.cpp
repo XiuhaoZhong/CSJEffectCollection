@@ -1,14 +1,14 @@
 #include "GraphicsBase.h"
 
-GraphicBase::GraphicBase() {
+GraphicsBase::GraphicsBase() {
 	m_mousePrePos = glm::vec3(0.0, 0.0, 0.0);
 }
 
-GraphicBase::~GraphicBase() {
+GraphicsBase::~GraphicsBase() {
 
 }
 
-bool GraphicBase::createShader(string& vertexPath, string& fragmentPath) {
+bool GraphicsBase::createShader(string& vertexPath, string& fragmentPath) {
 
 	bool createVertShaderRes = false, createFragShaderRes = false;
 	if (vertexPath.size() == 0) {
@@ -63,11 +63,11 @@ bool GraphicBase::createShader(string& vertexPath, string& fragmentPath) {
 	return (createVertShaderRes && createFragShaderRes);
 }
 
-void GraphicBase::useShaders() {
+void GraphicsBase::useShaders() {
 	glUseProgram(this->m_vRenderingProgram);
 }
 
-void GraphicBase::useProgram(GraphicSpProgram program) {
+void GraphicsBase::useProgram(GraphicSpProgram program) {
 	if (!program) {
 		return;
 	}
@@ -75,7 +75,7 @@ void GraphicBase::useProgram(GraphicSpProgram program) {
 	program->useProgram();
 }
 
-void GraphicBase::mouseMove(double xCoord, double yCoord) {
+void GraphicsBase::mouseMove(double xCoord, double yCoord) {
 	std::string log = Utils::formatString("Mouse move event, current position: ({0}, {1})", xCoord, yCoord);
 	//Utils::outputLog(log);
 
@@ -91,21 +91,21 @@ void GraphicBase::mouseMove(double xCoord, double yCoord) {
 	onMouseMove(xCoord, yCoord);
 }
 
-void GraphicBase::mouseScroll(double xOffset, double yOffset) {
+void GraphicsBase::mouseScroll(double xOffset, double yOffset) {
     std::string log = Utils::formatString("Mouse scroll event, current offset: ({0}, {1})", xOffset, yOffset);
 	Utils::outputLog(log);
 
 	onMouseScroll(xOffset, yOffset);
 }
 
-void GraphicBase::framebufferSizeChanged(int width, int height) {
+void GraphicsBase::framebufferSizeChanged(int width, int height) {
     std::string log = Utils::formatString("Framebuffer change event, current size: {0}x{1}", width, height);
     //Utils::outputLog(log);
 
 	onResize(width, height);
 }
 
-void GraphicBase::mouseButtonClicked(int mouseBtn, int event, int modes) {
+void GraphicsBase::mouseButtonClicked(int mouseBtn, int event, int modes) {
 	switch (mouseBtn) {
 	case GLFW_MOUSE_BUTTON_LEFT:
 		if (event == GLFW_PRESS) {
@@ -162,7 +162,7 @@ void GraphicBase::mouseButtonClicked(int mouseBtn, int event, int modes) {
 	}
 }
 
-glm::vec3 GraphicBase::translateMousePos(double xCoord, double yCoord) {
+glm::vec3 GraphicsBase::translateMousePos(double xCoord, double yCoord) {
 	GLdouble modelView[16];
 	GLdouble projView[16];
 	GLint viewPort[4];
@@ -182,39 +182,39 @@ glm::vec3 GraphicBase::translateMousePos(double xCoord, double yCoord) {
 	return glCoord;
 }
 
-void GraphicBase::onMouseLButtonPressed() {
+void GraphicsBase::onMouseLButtonPressed() {
 	
 }
 
-void GraphicBase::onMouseLButtonReleased() {
+void GraphicsBase::onMouseLButtonReleased() {
 	
 }
 
-void GraphicBase::onMouseRButtonPressed() {
+void GraphicsBase::onMouseRButtonPressed() {
     
 }
 
-void GraphicBase::onMouseRButtonReleased() {
+void GraphicsBase::onMouseRButtonReleased() {
     
 }
 
-void GraphicBase::onMouseMButtonPressed() {
+void GraphicsBase::onMouseMButtonPressed() {
     
 }
 
-void GraphicBase::onMouseMButtonReleased() {
+void GraphicsBase::onMouseMButtonReleased() {
     
 }
 
-void GraphicBase::onMouseMove(double xCoord, double yCoord) {
+void GraphicsBase::onMouseMove(double xCoord, double yCoord) {
 
 }
 
-void GraphicBase::onMouseScroll(double xOffset, double yOffset) {
+void GraphicsBase::onMouseScroll(double xOffset, double yOffset) {
 
 }
 
-void GraphicBase::onResize(int width, int height) {
+void GraphicsBase::onResize(int width, int height) {
 	
 }
 

@@ -121,7 +121,7 @@ std::string Utils::getResourcePath(std::string relativePath) {
     delete path;
 #elif __APPLE__
     std::string curPath = std::filesystem::current_path();
-    std::string resPath = curPath.append("/").append(relativePath);
+    resPath = curPath.append("/").append(relativePath);
 #endif
     return resPath;
 }

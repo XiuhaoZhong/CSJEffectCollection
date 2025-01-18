@@ -2,7 +2,7 @@
 
 #include "GraphicsBase.h"
 
-class GraphicInstance : public GraphicBase {
+class GraphicInstance : public GraphicsBase {
 public:
 	GraphicInstance();
 	~GraphicInstance();

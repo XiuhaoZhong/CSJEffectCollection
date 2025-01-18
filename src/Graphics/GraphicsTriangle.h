@@ -3,7 +3,7 @@
 
 #include "GraphicsBase.h"
 
-class GraphicTriagle : public GraphicBase {
+class GraphicTriagle : public GraphicsBase {
 public:
 	GraphicTriagle();
 	~GraphicTriagle();

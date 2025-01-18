@@ -2,7 +2,7 @@
 
 #include "GraphicsBase.h"
 
-class GraphicGradientTriangle : public GraphicBase {
+class GraphicGradientTriangle : public GraphicsBase {
 public:
 	GraphicGradientTriangle();
 	~GraphicGradientTriangle();

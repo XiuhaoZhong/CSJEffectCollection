@@ -54,12 +54,12 @@ using std::string;
 const int numVAOs = 1;
 const int numVBOs = 2;
 
-class GraphicBase {
+class GraphicsBase {
 public:
-	static std::shared_ptr<GraphicBase> createGraphicObj(GLFWwindow *window, GraphicType type);
+	static std::shared_ptr<GraphicsBase> createGraphicObj(GLFWwindow *window, GraphicType type);
 
-	GraphicBase();
-	virtual ~GraphicBase();
+	GraphicsBase();
+	virtual ~GraphicsBase();
 
 	virtual bool init(GLFWwindow *window) = 0;
 
@@ -160,5 +160,5 @@ private:
 	std::array<double, 2> m_mouseOriginPos;
 };
 
-using GraphicSpObject = std::shared_ptr<GraphicBase>;
+using GraphicSpObject = std::shared_ptr<GraphicsBase>;
 

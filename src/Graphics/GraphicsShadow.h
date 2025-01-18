@@ -9,10 +9,10 @@
 constexpr int ShadowNumVAO = 1;
 constexpr int ShadowNumVBO = 5;
 
-class GraphicShadow : public GraphicBase {
+class GraphicsShadow : public GraphicsBase {
 public:
-    GraphicShadow();
-    ~GraphicShadow();
+    GraphicsShadow();
+    ~GraphicsShadow();
 
     bool init(GLFWwindow* window) override;
     void display(GLFWwindow* window, double currentTime) override;

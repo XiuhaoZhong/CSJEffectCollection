@@ -2,7 +2,7 @@
 
 #include "GraphicsBase.h"
 
-class GraphicRectangle : public GraphicBase {
+class GraphicRectangle : public GraphicsBase {
 public:
 	GraphicRectangle();
 	~GraphicRectangle();

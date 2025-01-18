@@ -17,7 +17,7 @@ typedef enum {
     GraphicTorus_BlinnPhong
 } GraphicTorusRenderType;
 
-class GraphicTorus : public GraphicBase {
+class GraphicTorus : public GraphicsBase {
 public:
     GraphicTorus();
     ~GraphicTorus();

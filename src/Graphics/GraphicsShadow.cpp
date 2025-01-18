@@ -2,7 +2,7 @@
 
 #include "Utils/utils.h"
 
-GraphicShadow::GraphicShadow() {
+GraphicsShadow::GraphicsShadow() {
     initShapes();
     setupLightsAndMaterial();
 
@@ -15,17 +15,17 @@ GraphicShadow::GraphicShadow() {
     m_upDirection = glm::vec3(0.0f, 1.0f, 0.0f);
 }
 
-GraphicShadow::~GraphicShadow() {
+GraphicsShadow::~GraphicsShadow() {
 
 }
 
-bool GraphicShadow::init(GLFWwindow *window) {
-    string shadowVerPath = Utils::getResourcePath("shaders\\shadowShaders\\shadowVertexShader.glsl");
-    string shadowFragPath = Utils::getResourcePath("shaders\\shadowShaders\\shadowFragmentShader.glsl");
+bool GraphicsShadow::init(GLFWwindow *window) {
+    string shadowVerPath = Utils::getResourcePath("shaders/shadowShaders/shadowVertexShader.glsl");
+    string shadowFragPath = Utils::getResourcePath("shaders/shadowShaders/shadowFragmentShader.glsl");
     m_pShadowProgram = std::make_shared<GraphicProgram>(shadowVerPath, shadowFragPath);
 
-    string renderVerPath = Utils::getResourcePath("shaders\\shadowShaders\\renderVertexShader.glsl");
-    string renderFragPath = Utils::getResourcePath("shaders\\shadowShaders\\renderFragmentShader.glsl");
+    string renderVerPath = Utils::getResourcePath("shaders/shadowShaders/renderVertexShader.glsl");
+    string renderFragPath = Utils::getResourcePath("shaders/shadowShaders/renderFragmentShader.glsl");
     m_pRenderProgram = std::make_shared<GraphicProgram>(renderVerPath, renderFragPath);
 
     //m_pSelectProgram = std::make_shared<GraphicProgram>(renderVerPath, renderFragPath);
@@ -104,7 +104,7 @@ bool GraphicShadow::init(GLFWwindow *window) {
     return true;
 }
 
-void GraphicShadow::display(GLFWwindow *window, double currentTime) {
+void GraphicsShadow::display(GLFWwindow *window, double currentTime) {
     glClear(GL_DEPTH_BUFFER_BIT);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
@@ -134,11 +134,11 @@ void GraphicShadow::display(GLFWwindow *window, double currentTime) {
     drawContentAtCamera();
 }
 
-void GraphicShadow::onMouseLButtonPressed() {
+void GraphicsShadow::onMouseLButtonPressed() {
     selectedItem();
 }
 
-void GraphicShadow::onMouseMove(double xCoord, double yCoord) {
+void GraphicsShadow::onMouseMove(double xCoord, double yCoord) {
     if (!MouseLButtonPressed()) {
         return;
     }
@@ -162,7 +162,7 @@ void GraphicShadow::onMouseMove(double xCoord, double yCoord) {
     }
 }
 
-void GraphicShadow::onMouseScroll(double xOffset, double yOffset) {
+void GraphicsShadow::onMouseScroll(double xOffset, double yOffset) {
     if (yOffset > 0) {
         m_cameraPos.z -= 0.5;
     } else {
@@ -170,17 +170,17 @@ void GraphicShadow::onMouseScroll(double xOffset, double yOffset) {
     }
 }
 
-void GraphicShadow::onMouseLButtonReleased() {
+void GraphicsShadow::onMouseLButtonReleased() {
     
 }
 
-void GraphicShadow::initShapes() {
-    string objFilePath = Utils::getResourcePath("resources\\pyr.obj");
+void GraphicsShadow::initShapes() {
+    string objFilePath = Utils::getResourcePath("resources/pyr.obj");
     m_pPyramid = GraphicShapeBase::createPraymid(objFilePath);
     m_pTorus = GraphicShapeBase::createTorus(0.6f, 0.4f, 48);
 }
 
-void GraphicShadow::setupLightsAndMaterial() {
+void GraphicsShadow::setupLightsAndMaterial() {
     m_pGlobalAmt = Utils::globalAmbient();
 
     m_pLightAmt = Utils::lightAmbient();
@@ -193,7 +193,7 @@ void GraphicShadow::setupLightsAndMaterial() {
     m_BronzeShininess = Utils::bronzeShininess();
 }
 
-void GraphicShadow::setupShadowTex(int width, int height) {
+void GraphicsShadow::setupShadowTex(int width, int height) {
 
     glGenFramebuffers(1, &m_shadowBuffer);
     glGenTextures(1, &m_shadowTex);
@@ -209,7 +209,7 @@ void GraphicShadow::setupShadowTex(int width, int height) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 }
 
-void GraphicShadow::installLight(GraphicSpProgram &program, glm::mat4 vMat) {
+void GraphicsShadow::installLight(GraphicSpProgram &program, glm::mat4 vMat) {
     m_transformed = glm::vec3(vMat * glm::vec4(m_curLightPos, 1.0f));
 
     m_pLightPos[0] = m_transformed.x;
@@ -237,7 +237,7 @@ void GraphicShadow::installLight(GraphicSpProgram &program, glm::mat4 vMat) {
     glProgramUniform1f(program->getProgramID(), materialShinLoc, m_BronzeShininess);
 }
 
-void GraphicShadow::drawTexAtLight() {
+void GraphicsShadow::drawTexAtLight() {
     useProgram(m_pShadowProgram);
 
     glBindVertexArray(m_VAO[0]);
@@ -284,7 +284,7 @@ void GraphicShadow::drawTexAtLight() {
     glBindVertexArray(0);
 }
 
-void GraphicShadow::drawContentAtCamera() {
+void GraphicsShadow::drawContentAtCamera() {
     useProgram(m_pRenderProgram);
 
     glBindVertexArray(m_VAO[0]);
@@ -369,7 +369,7 @@ void GraphicShadow::drawContentAtCamera() {
     glBindVertexArray(0);
 }
 
-void GraphicShadow::drawForSelect() {
+void GraphicsShadow::drawForSelect() {
     useProgram(m_pRenderProgram);
 
     glBindVertexArray(m_VAO[0]);
@@ -461,11 +461,11 @@ void GraphicShadow::drawForSelect() {
     glBindVertexArray(0);
 }
 
-void GraphicShadow::modifyCameraPos(glm::vec3 &deltaPos) {
+void GraphicsShadow::modifyCameraPos(glm::vec3 &deltaPos) {
     m_cameraPos = glm::vec3(m_cameraPos - deltaPos);
 }
 
-void GraphicShadow::selectedItem() {
+void GraphicsShadow::selectedItem() {
     GLuint pickBuffer[512];
     GLint nPicks, vp[4];
 

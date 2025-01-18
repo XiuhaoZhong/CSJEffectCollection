@@ -12,7 +12,7 @@
 
 using namespace std;
 
-std::weak_ptr<GraphicBase> gGraphicObj;
+std::weak_ptr<GraphicsBase> gGraphicObj;
 
 // mouse button click callback.
 void mouse_callback(GLFWwindow *window, int button, int action, int mods);
@@ -49,8 +49,8 @@ int internalMain() {
 		exit(EXIT_FAILURE);
 	}
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #if __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
@@ -76,7 +76,7 @@ int internalMain() {
 	}
 	glfwSwapInterval(1);
 
-	GraphicSpObject graphic = GraphicBase::createGraphicObj(window, GraphicType_Shadow);
+	GraphicSpObject graphic = GraphicsBase::createGraphicObj(window, GraphicType_Shadow);
     if (!graphic) {
         exit(EXIT_FAILURE);
     }

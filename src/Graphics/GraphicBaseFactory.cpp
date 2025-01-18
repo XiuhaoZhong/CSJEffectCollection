@@ -17,7 +17,7 @@
 #include "GraphicsShadow.h"
 
 
-std::shared_ptr<GraphicBase> GraphicBase::createGraphicObj(GLFWwindow *window, GraphicType type) {
+std::shared_ptr<GraphicsBase> GraphicsBase::createGraphicObj(GLFWwindow *window, GraphicType type) {
     if (type < 0) {
         return nullptr;
     }
@@ -68,7 +68,7 @@ std::shared_ptr<GraphicBase> GraphicBase::createGraphicObj(GLFWwindow *window, G
         graphic = std::make_shared<GraphicTorus>();
         break;
     case GraphicType_Shadow:
-        graphic = std::make_shared<GraphicShadow>();
+        graphic = std::make_shared<GraphicsShadow>();
         break;
     default:
         return nullptr;
