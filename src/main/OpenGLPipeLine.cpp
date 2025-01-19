@@ -25,26 +25,7 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
 void framebuffer_size_change_callback(GLFWwindow *window, int width, int height);
 
-int internalMain();
-
-#if _WIN32
 int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow) {
-    int argc = 0;
-    LPWSTR *argList;
-
-    argList = CommandLineToArgvW(GetCommandLine(), &argc);
-
-    return internalMain();
-}
-#elif __APPLE__
-int main(int argc, char** argv) {
-    // TODO: parse argc and argv if necessary.
-    return internalMain();
-}
-#endif
-
-int internalMain() {
-
 	if (!glfwInit()) {
 		exit(EXIT_FAILURE);
 	}
@@ -52,9 +33,6 @@ int internalMain() {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#if __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
 
 	GLFWwindow *window = glfwCreateWindow(800, 800, "OpenGL", NULL, NULL);
     if (!window) {
