@@ -32,11 +32,7 @@ protected:
     void drawTexAtLight();
     void drawContentAtCamera();
 
-    void drawForSelect();
-
     void modifyCameraPos(glm::vec3 &deltaPos);
-
-    void selectedItem();
 
 private:
     int m_iWinWidth;

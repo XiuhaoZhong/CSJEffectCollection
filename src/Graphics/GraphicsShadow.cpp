@@ -118,12 +118,12 @@ void GraphicsShadow::display(GLFWwindow *window, double currentTime) {
 
     glDrawBuffer(GL_NONE);
     glEnable(GL_DEPTH_TEST);
-    //glEnable(GL_POLYGON_OFFSET_FILL);
-    //glPolygonOffset(2.0f, 4.0f);
+    glEnable(GL_POLYGON_OFFSET_FILL);
+    glPolygonOffset(2.0f, 4.0f);
 
     drawTexAtLight();
 
-    //glDisable(GL_POLYGON_OFFSET_FILL);
+    glDisable(GL_POLYGON_OFFSET_FILL);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glActiveTexture(GL_TEXTURE0);
@@ -135,7 +135,7 @@ void GraphicsShadow::display(GLFWwindow *window, double currentTime) {
 }
 
 void GraphicsShadow::onMouseLButtonPressed() {
-    selectedItem();
+    
 }
 
 void GraphicsShadow::onMouseMove(double xCoord, double yCoord) {
@@ -373,137 +373,6 @@ void GraphicsShadow::drawContentAtCamera() {
     glBindVertexArray(0);
 }
 
-void GraphicsShadow::drawForSelect() {
-    useProgram(m_pRenderProgram);
-
-    glBindVertexArray(m_VAO[0]);
-
-    GLuint selectLoc = m_pRenderProgram->getUniformLoc("inSelected");
-    glUniform1i(selectLoc, 1);
-
-    glPushName(1);
-    GLuint mvLoc = m_pRenderProgram->getUniformLoc("mv_matrix");
-    GLuint projLoc = m_pRenderProgram->getUniformLoc("proj_matrix");
-    GLuint norLoc = m_pRenderProgram->getUniformLoc("norm_matrix");
-    GLuint shadowMVPLoc = m_pRenderProgram->getUniformLoc("shadowMVP");
-
-    glm::mat4 vMat = glm::translate(glm::mat4(1.0f),
-                                    glm::vec3(-m_cameraPos.x, -m_cameraPos.y, -m_cameraPos.z));
-
-    // ������תЧ��
-    vMat = glm::rotate(vMat, Utils::toRadians(m_dAngleDeltaX), glm::vec3(0.0, 1.0, 0.0));
-    vMat = glm::rotate(vMat, Utils::toRadians(m_dAngleDeltaY), glm::vec3(1.0, 0.0, 0.0));
-
-    // ��������Ч��
-    //vMat = glm::scale(vMat, glm::vec3(5.0, 5.0, 5.0f));
-
-    glm::mat4 mMat = glm::translate(glm::mat4(1.0f), m_torusPos);
-    mMat = glm::rotate(mMat, Utils::toRadians(25.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-
-    m_curLightPos = glm::vec3(m_lightPos);
-    installLight(m_pRenderProgram, vMat);
-
-    glm::mat4 mvMat = vMat * mMat;
-    m_invTrMat = glm::transpose(glm::inverse(mvMat));
-    glm::mat4 shadowMVP2 = m_toShadowMat * m_lightPmatrix * m_lightVmatrix * mMat;
-
-    glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
-    glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_pMat));
-    glUniformMatrix4fv(norLoc, 1, GL_FALSE, glm::value_ptr(m_invTrMat));
-    glUniformMatrix4fv(shadowMVPLoc, 1, GL_FALSE, glm::value_ptr(shadowMVP2));
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_VBO[1]);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_VBO[3]);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(1);
-
-    glClear(GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_CULL_FACE);
-    glFrontFace(GL_CCW);
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_VBO[4]);
-    glDrawElements(GL_TRIANGLES, m_pTorus->getIndiceNum(), GL_UNSIGNED_INT, 0);
-    glPopName();
-
-    glPushName(2);
-    mMat = glm::translate(glm::mat4(1.0f), m_pyramidPos);
-    mMat = glm::rotate(mMat, Utils::toRadians(30.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    mMat = glm::rotate(mMat, Utils::toRadians(40.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-    m_curLightPos = glm::vec3(m_lightPos);
-    installLight(m_pRenderProgram, vMat);
-
-    mvMat = vMat * mMat;
-    m_invTrMat = glm::transpose(glm::inverse(mvMat));
-    shadowMVP2 = m_toShadowMat * m_lightPmatrix * m_lightVmatrix * mMat;
-
-    glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
-    glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(m_pMat));
-    glUniformMatrix4fv(norLoc, 1, GL_FALSE, glm::value_ptr(m_invTrMat));
-    glUniformMatrix4fv(shadowMVPLoc, 1, GL_FALSE, glm::value_ptr(shadowMVP2));
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_VBO[0]);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_VBO[2]);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(1);
-
-    glEnable(GL_CULL_FACE);
-    glFrontFace(GL_CCW);
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-    glDrawArrays(GL_TRIANGLES, 0, m_pPyramid->getVerticeNum());
-    glPopName();
-
-    glBindVertexArray(0);
-}
-
 void GraphicsShadow::modifyCameraPos(glm::vec3 &deltaPos) {
     m_cameraPos = glm::vec3(m_cameraPos - deltaPos);
-}
-
-void GraphicsShadow::selectedItem() {
-    GLuint pickBuffer[512];
-    GLint nPicks, vp[4];
-
-    glGetIntegerv(GL_VIEWPORT, vp);
-    glSelectBuffer(512, pickBuffer);
-
-    glRenderMode(GL_SELECT);
-    glInitNames();
-    glPushName(-1);
-
-    glPushMatrix();
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-
-    std::array<double, 2> mousePos = getMouseOriginPos();//getMouseLButtonClickPos();
-    gluPickMatrix((GLdouble)mousePos[0], (GLdouble)(vp[3] - mousePos[1]), 5.0, 5.0, vp);
-    gluPerspective(Utils::toRadians(90), 1.0, 0.1, 1000);
-    glMatrixMode(GL_MODELVIEW);
-    //gluOrtho2D(0, m_iWinWidth, 0.0, m_iWinHeight);
-    //glOrtho(0.0, 5.0, 5.0, 10.0, 0.1, 1000);
-    //glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    gluLookAt(0.0, 0.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    
-    drawForSelect();
-    glMatrixMode(GL_PROJECTION);
-    glPopMatrix();
-    glFlush();
-
-    nPicks = glRenderMode(GL_RENDER);
-    if (nPicks == 0) {
-        Utils::outputLog("there is no item selected");
-    } else {
-        std::string log = Utils::formatString("Selected {0} item", nPicks);
-        Utils::outputLog(log);
-    }
 }
