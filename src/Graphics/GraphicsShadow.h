@@ -22,6 +22,7 @@ protected:
     void onMouseMove(double xCoord, double yCoord) override;
     void onMouseScroll(double xOffset, double yOffset) override;
     void onMouseLButtonReleased() override;
+    void onResize(int width, int height) override;
 
     void initShapes();
     void setupLightsAndMaterial();

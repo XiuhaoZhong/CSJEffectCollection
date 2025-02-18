@@ -16,9 +16,9 @@ std::weak_ptr<GraphicsBase> gGraphicObj;
 
 // mouse button click callback.
 void mouse_callback(GLFWwindow *window, int button, int action, int mods);
-// mouse move callbacl.
+// mouse move callback.
 void mouse_move_callback(GLFWwindow *, double xCoord, double yCoord);
-// mouse scroll callbacl.
+// mouse scroll callback.
 void mouse_scroll_callback(GLFWwindow *window, double xOffset, double yOffset);
 // Is called whenever a key is pressed/released via GLFW;
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);

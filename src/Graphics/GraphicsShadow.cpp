@@ -174,6 +174,10 @@ void GraphicsShadow::onMouseLButtonReleased() {
     
 }
 
+void GraphicsShadow::onResize(int width, int height) {
+    
+}
+
 void GraphicsShadow::initShapes() {
     string objFilePath = Utils::getResourcePath("resources/pyr.obj");
     m_pPyramid = GraphicShapeBase::createPraymid(objFilePath);
