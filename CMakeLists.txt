@@ -36,10 +36,10 @@ add_executable(${TARGET_NAME}
 
 include_directories(${EFFECTCOLLECTION_ROOT_DIR}/src ${THIRD_PARTY_DIR})
 
-target_link_libraries(${TARGET_NAME} PUBLIC glfw)
 target_link_libraries(${TARGET_NAME} PRIVATE ${Native_LIBS})
-target_link_libraries(${TARGET_NAME} PUBLIC $<BUILD_INTERFACE:SOIL2>)
 target_link_libraries(${TARGET_NAME} PUBLIC glew)
+target_link_libraries(${TARGET_NAME} PUBLIC glfw)
+target_link_libraries(${TARGET_NAME} PUBLIC $<BUILD_INTERFACE:SOIL2>)
 
 if(APPLE)
 set(OpenGL_GL_PREFERENCE LEGACY)

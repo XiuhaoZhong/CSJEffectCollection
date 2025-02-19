@@ -11,10 +11,10 @@ if(NOT TARGET glfw)
 endif()
 
 if(NOT TARGET glew)
-    option(glew-cmake_BUILD_SHARED "" OFF)
-    option(glew-cmake_BUILD_STATIC "" ON)
-    option(ONLY_LIBS "" ON)
-    option(USE_GLU "" ON)
+    option(glew-cmake_BUILD_SHARED "Don't build for shared" OFF)
+    option(glew-cmake_BUILD_STATIC "Build for static" ON)
+    option(ONLY_LIBS "only libs" ON)
+    option(USE_GLU "Use glu" ON)
     add_subdirectory(glew)
     set_target_properties(glew PROPERTIES FOLDER ${third_party_folder}/glew)
 endif()
@@ -25,5 +25,5 @@ add_library(SOIL2 ${SOIL2_INCLUDE}/etc1_utils.c
                   ${SOIL2_INCLUDE}/image_DXT.c
                   ${SOIL2_INCLUDE}/image_helper.c
                   ${SOIL2_INCLUDE}/SOIL2.c)
-set_target_properties(SOIL2 PROPERTIES FOLDER "ThirdParty/SOIL2")
+set_target_properties(SOIL2 PROPERTIES FOLDER ${third_party_folder}/SOIL2)
 endif()
